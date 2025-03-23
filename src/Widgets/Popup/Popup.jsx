@@ -76,16 +76,19 @@ const Value = styled.h4`
 export default function Popup({ selectedItem, selectedCategory, onClose }) {
   if (!selectedItem) return null;
 
+  
+
   return (
     <>
       <Overlay isVisible={!!selectedItem} />
       <Blur isVisible={!!selectedItem} onClick={onClose} />
       <PopupContainer isVisible={!!selectedItem} onClick={onClose}>
-        <Title>{selectedItem.name || selectedItem.title}</Title>
-        {template[selectedCategory]?.map((field, index) => (
+        <Title>{selectedItem.name}</Title>
+        
+        {template[selectedCategory].map((item, index) => (
           <DescriptItem key={index}>
-            <Label>{field.label}:</Label>
-            <Value>{selectedItem[field.key]}</Value>
+            <Label>{item.label}:</Label>
+            <Value>{selectedItem[item.key]}</Value>
           </DescriptItem>
         ))}
       </PopupContainer>

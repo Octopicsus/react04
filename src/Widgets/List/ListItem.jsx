@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Title = styled.p`
   font-size: 15px;
-  margin: 20px;
+  margin: 17px;
   height: 20px;
   transition: 0.3s;
   cursor: pointer;
