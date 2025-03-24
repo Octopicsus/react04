@@ -38,6 +38,7 @@ const LoadMoreButton = styled.button`
     transform: translate(-50%, -50%) rotate(90deg) scale(1);
     opacity: 50%;
   }
+
   &:hover {
     transform: scale(1.5);
     animation: none;
@@ -83,6 +84,7 @@ export default function List({ selectedCategory, onItemSelect }) {
         setItemUrl(responseData.next);
 
         setLoading(false);
+
       } catch (error) {
         console.error("Error:", error);
       }
@@ -95,10 +97,9 @@ export default function List({ selectedCategory, onItemSelect }) {
     try {
       const response = await fetch(itemUrl);
       const newData = await response.json();
-      const newItemsCount = newData.results.length;
+   
       setResults([...results, ...newData.results]);
       setItemUrl(newData.next);
-
       setTimeout(() => {
         const firstNewItemIndex = results.length;
         const listItems = document.querySelectorAll('.list-item');
@@ -110,8 +111,9 @@ export default function List({ selectedCategory, onItemSelect }) {
           });
         }
       }, 100);
+
     } catch (error) {
-      console.error("Error loading more items:", error);
+      console.error("Error:", error);
     }
   };
 
@@ -119,8 +121,10 @@ export default function List({ selectedCategory, onItemSelect }) {
 
   if (!selectedCategory) {
     content = <ImgBackground />;
+
   } else if (loading) {
     content = <Loader />;
+
   } else if (results.length > 0) {
     content = (
       <>

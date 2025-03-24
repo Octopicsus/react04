@@ -12,11 +12,13 @@ const Loader = () => (
     display: 'flex', 
     justifyContent: 'center', 
     alignItems: 'center',
-    zIndex: 1000 
+    zIndex: 1000,
   }}>
+
     <Flex align="center" justify="center" gap="middle">
       <Spin indicator={<LoadingOutlined style={{ fontSize: 68, color: 'black' }} spin />} />
     </Flex>
+    
   </div>
 );
 
