@@ -28,7 +28,7 @@ const LoadMoreButton = styled.button`
     content: "";
     width: 20px;
     height: 20px;
-    background-image: url("/img/right-arrow-next.svg");
+    background-image: url("./img/right-arrow-next.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -98,7 +98,7 @@ export default function List({ selectedCategory, onItemSelect }) {
       const newItemsCount = newData.results.length;
       setResults([...results, ...newData.results]);
       setItemUrl(newData.next);
-      
+
       setTimeout(() => {
         const firstNewItemIndex = results.length;
         const listItems = document.querySelectorAll('.list-item');

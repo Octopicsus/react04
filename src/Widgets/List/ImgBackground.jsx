@@ -8,7 +8,7 @@ const Cover = styled.div`
     transform: translate(-50%, -50%);
     width: 100%;
     height: 400px;
-    background: url("/img/star-wars.svg");
+    background: url("./img/star-wars.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

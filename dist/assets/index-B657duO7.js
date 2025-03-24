@@ -202,7 +202,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     transform: translate(-50%, -50%);
     width: 100%;
     height: 400px;
-    background: url("/img/star-wars.svg");
+    background: url("./img/star-wars.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -228,7 +228,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     content: "";
     width: 20px;
     height: 20px;
-    background-image: url("/img/right-arrow-next.svg");
+    background-image: url("./img/right-arrow-next.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
