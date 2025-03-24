@@ -17,5 +17,5 @@ const Title = styled.p`
 `;
 
 export default function ListItem({ title, onClick }) {
-  return <Title onClick={onClick}>{title}</Title>;
+  return <Title className="list-item" onClick={onClick}>{title}</Title>;
 }

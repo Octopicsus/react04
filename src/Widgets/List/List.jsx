@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ListItem from "./ListItem";
 import styled from "styled-components";
+import Loader from "./Loader";
+import ImgBackground from "./ImgBackground";
 
 const ListContainer = styled.div`
   margin-top: 20px;
@@ -13,7 +15,6 @@ const ListContainer = styled.div`
 const LoadMoreButton = styled.button`
   background-color: rgba(255, 255, 255, 0);
   color: transparent;
-  display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
@@ -25,7 +26,6 @@ const LoadMoreButton = styled.button`
 
   &::before {
     content: "";
-    display: block;
     width: 20px;
     height: 20px;
     background-image: url("/img/right-arrow-next.svg");
@@ -65,6 +65,7 @@ const LoadMoreButton = styled.button`
 export default function List({ selectedCategory, onItemSelect }) {
   const [itemUrl, setItemUrl] = useState("");
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,11 +74,15 @@ export default function List({ selectedCategory, onItemSelect }) {
           return;
         }
 
+        setLoading(true);
+
         const url = `https://swapi.dev/api/${selectedCategory}`;
         const response = await fetch(url);
         const responseData = await response.json();
         setResults(responseData.results);
         setItemUrl(responseData.next);
+
+        setLoading(false);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -90,30 +95,49 @@ export default function List({ selectedCategory, onItemSelect }) {
     try {
       const response = await fetch(itemUrl);
       const newData = await response.json();
+      const newItemsCount = newData.results.length;
       setResults([...results, ...newData.results]);
       setItemUrl(newData.next);
+      
+      setTimeout(() => {
+        const firstNewItemIndex = results.length;
+        const listItems = document.querySelectorAll('.list-item');
+      
+        if (listItems.length > firstNewItemIndex) {
+          listItems[firstNewItemIndex].scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 100);
     } catch (error) {
       console.error("Error loading more items:", error);
     }
   };
 
-  return (
-    <ListContainer>
-      {results.length > 0 ? (
-        <>
-          {results.map((item, index) => (
-            <ListItem
-              key={index}
-              title={item.name}
-              onClick={() => onItemSelect(item, selectedCategory)}
-            />
-          ))}
+  let content;
 
-          {itemUrl && <LoadMoreButton onClick={loadMore}></LoadMoreButton>}
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </ListContainer>
-  );
+  if (!selectedCategory) {
+    content = <ImgBackground />;
+  } else if (loading) {
+    content = <Loader />;
+  } else if (results.length > 0) {
+    content = (
+      <>
+        {results.map((item, index) => (
+          <ListItem
+            key={index}
+            title={item.name}
+            onClick={() => onItemSelect(item, selectedCategory)}
+          />
+        ))}
+
+        {itemUrl && (
+          <LoadMoreButton type="button" onClick={loadMore}></LoadMoreButton>
+        )}
+      </>
+    );
+  }
+
+  return <ListContainer>{content}</ListContainer>;
 }

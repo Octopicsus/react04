@@ -9,29 +9,32 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
 
+
   const handleItemSelect = (item, category) => {
     setSelectedItem(item);
     setSelectedCategory(category);
   };
-  
+
   const handleClosePopup = () => {
     setSelectedItem(null);
   };
 
+
+
   return (
     <>
-      <Popup 
-        selectedItem={selectedItem} 
-        selectedCategory={selectedCategory} 
-        onClose={handleClosePopup} 
+      <Popup
+        selectedItem={selectedItem}
+        selectedCategory={selectedCategory}
+        onClose={handleClosePopup}
       />
-      <Navigation 
-        selected={selectedCategory} 
-        setSelected={setSelectedCategory} 
+      <Navigation
+        selected={selectedCategory}
+        setSelected={setSelectedCategory}
       />
-      <List 
-        selectedCategory={selectedCategory} 
-        onItemSelect={handleItemSelect} 
+      <List
+        selectedCategory={selectedCategory}
+        onItemSelect={handleItemSelect}
       />
       <Footer />
     </>
